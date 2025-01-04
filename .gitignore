@@ -169,6 +169,6 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
-imageauthenticity/*
+image_env/*
 artifacts/*
 implementation_note.ipynb
