@@ -1,0 +1,123 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/image_authenticity_detector/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 5d5c10e4d70b7f7591b7fe38d034595c
+      size: 798
+    - path: src/image_authenticity_detector/pipeline/stage_01_data_ingestion.py
+      hash: md5
+      md5: a2e7e75f363d1e56d850f0f8b57f3f26
+      size: 952
+    outs:
+    - path: artifacts/data_ingestion/real-vs-ai-generated/test
+      hash: md5
+      md5: c51d0cc1e6455e9b46bffbb8d0f686d2.dir
+      size: 18450673
+      nfiles: 20000
+    - path: artifacts/data_ingestion/real-vs-ai-generated/train
+      hash: md5
+      md5: b108aa6398f714e0ac918bd623987230.dir
+      size: 92267180
+      nfiles: 100000
+  prepare_base_model:
+    cmd: python src/image_authenticity_detector/pipeline/stage_02_prepare_base_model.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 5d5c10e4d70b7f7591b7fe38d034595c
+      size: 798
+    - path: src/image_authenticity_detector/pipeline/stage_02_prepare_base_model.py
+      hash: md5
+      md5: 729d3d5a8e13fef101cff464932466cc
+      size: 1039
+    params:
+      params.yaml:
+        CLASSES: 2
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        INCLUDE_TOP: false
+        LEARNING_RATE: 0.01
+        WEIGHTS: imagenet
+    outs:
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: 8f0cb6f157ab864bfa379b5ab6b244a8.dir
+      size: 118054560
+      nfiles: 2
+  training:
+    cmd: python src/image_authenticity_detector/pipeline/stage_03_model_trainer.py
+    deps:
+    - path: artifacts/data_ingestion/real-vs-ai-generated/test
+      hash: md5
+      md5: c51d0cc1e6455e9b46bffbb8d0f686d2.dir
+      size: 18450673
+      nfiles: 20000
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: 8f0cb6f157ab864bfa379b5ab6b244a8.dir
+      size: 118054560
+      nfiles: 2
+    - path: config/config.yaml
+      hash: md5
+      md5: 5d5c10e4d70b7f7591b7fe38d034595c
+      size: 798
+    - path: src/image_authenticity_detector/components/prepare_callbacks.py
+      hash: md5
+      md5: 7f1fad0882a10c8215f3f3e5fe1ec9e8
+      size: 1020
+    - path: src/image_authenticity_detector/pipeline/stage_03_model_trainer.py
+      hash: md5
+      md5: 37a917c515cbb6d8c5a65382b9aff89c
+      size: 1327
+    params:
+      params.yaml:
+        AUGMENTATION: true
+        BATCH_SIZE: 32
+        EPOCHS: 1
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        LEARNING_RATE: 0.01
+    outs:
+    - path: artifacts/training/model.h5
+      hash: md5
+      md5: f57c5821a0d123390de749ca542641b2
+      size: 59540824
+  evaluation:
+    cmd: python src/image_authenticity_detector/pipeline/stage_04_model_evaluation.py
+    deps:
+    - path: artifacts/data_ingestion/real-vs-ai-generated/test
+      hash: md5
+      md5: c51d0cc1e6455e9b46bffbb8d0f686d2.dir
+      size: 18450673
+      nfiles: 20000
+    - path: artifacts/training/model.h5
+      hash: md5
+      md5: f57c5821a0d123390de749ca542641b2
+      size: 59540824
+    - path: config/config.yaml
+      hash: md5
+      md5: 5d5c10e4d70b7f7591b7fe38d034595c
+      size: 798
+    - path: src/image_authenticity_detector/pipeline/stage_04_model_evaluation.py
+      hash: md5
+      md5: 9dee4174ae873871d9db834a4b02cb51
+      size: 980
+    params:
+      params.yaml:
+        BATCH_SIZE: 32
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: scores.json
+      hash: md5
+      md5: 0c71f2d8ee3e88fbef890ad72a701824
+      size: 73
