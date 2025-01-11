@@ -3,9 +3,9 @@ FROM python:3.10-slim-bullseye
 RUN apt-get update && \
     apt-get upgrade --yes
 
-RUN useradd --create-home imageauth
+#RUN useradd --create-home imageauth
 
-USER imageauth
+#USER imageauth
 
 WORKDIR /home/imageauth
 
@@ -15,17 +15,22 @@ RUN python3 -m venv $VIRTUALENV
 
 ENV PATH="$VIRTUALENV/bin:$PATH"
 
-COPY --chown=imageauth pyproject.toml requirements.txt ./ 
+COPY . .
 
-COPY --chown=imageauth config logs model ./
+#COPY --chown=imageauth pyproject.toml requirements.txt ./ 
 
-COPY --chown=imageauth templates params.yaml ./
+#COPY --chown=imageauth config logs model ./
 
-COPY --chown=imageauth src ./
+#COPY --chown=imageauth templates params.yaml ./
 
-COPY --chown=imageauth app.py main.py dvc.yaml ./
+#COPY --chown=imageauth src ./
 
-RUN python -m pip install --upgrade pip setuptools && \
-    python -m pip install --no-cache-dir -r requirements.txt
+#COPY --chown=imageauth app.py main.py dvc.yaml README.md ./
+
+#RUN python -m pip install --upgrade pip setuptools
+
+#RUN python -m pip install -r requirements.txt
+
+RUN python -m pip install --no-cache-dir -r requirements.txt
 
 CMD ["python3", "app.py"]

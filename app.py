@@ -26,8 +26,8 @@ def home():
 @app.route("/train", methods=['GET','POST'])
 @cross_origin()
 def trainRoute():
-    # os.system("python main.py")
-    os.system("dvc repro")
+    os.system("python main.py")
+    #os.system("dvc repro")
     return "Training done successfully!"
 
 @app.route("/predict", methods=['POST'])
@@ -42,6 +42,6 @@ def predictRoute():
 if __name__ == "__main__":
     clApp = ClientApp()
     #app.run(host='0.0.0.0', port=8080) #for AWS
-    app.run(host='0.0.0.0', port=8080) #for local host
-    #app.run(host='0.0.0.0', port=80) #for azure
+    #app.run(host='0.0.0.0', port=8080) #for local host
+    app.run(host='0.0.0.0', port=80) #for azure
     

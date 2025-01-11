@@ -1,5 +1,3 @@
-setuptools
-wheel
 tensorflow==2.12.0
 pandas 
 gdown
