@@ -27,7 +27,7 @@ COPY . .
 
 #COPY --chown=imageauth app.py main.py dvc.yaml README.md ./
 
-#RUN python -m pip install --upgrade pip setuptools
+RUN python -m pip install --upgrade pip setuptools
 
 #RUN python -m pip install -r requirements.txt
 
