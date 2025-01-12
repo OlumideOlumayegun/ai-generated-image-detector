@@ -7,8 +7,8 @@ This repository contains an end-to-end application for detecting whether an imag
 - [Project Overview](#project-overview)
 - [Dataset](#dataset)
 - [Directory Structure](#directory-structure)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
+- [Key Features](#features)
+- [Tools and Technologies](#technologies-used)
 - [Pipeline Stages](#pipeline-stages)
 - [Setup and Installation](#setup-and-installation)
 - [AWS Deployment](#deployment)
@@ -92,4 +92,10 @@ The dataset used for training and evaluating the model was sourced from [Kaggle]
 - **Cloud Services**: S3, Azure Web App Service, Azure Container Registry
 - **Version Control & CI/CD**: Git, GitHub Actions
 - **Containerisation**: Docker
+
+## Pipeline Stages
+- **Data Ingestion**: Fetch images from the S3 bucket and prepare the dataset.
+- **Base Model Development**: Modify the VGG16 model for binary classification.
+- **Model Training**: Train the updated model using real and AI-generated images.
+- **Model Evaluation**: Evaluate the model's performance on the validation set.
 
