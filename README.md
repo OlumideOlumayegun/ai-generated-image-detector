@@ -10,9 +10,8 @@ This repository contains an end-to-end application for detecting whether an imag
 - [Key Features](#features)
 - [Tools and Technologies](#technologies-used)
 - [Pipeline Stages](#pipeline-stages)
-- [Setup and Installation](#setup-and-installation)
-- [AWS Deployment](#deployment)
-- [Usage](#usage)
+- [Setup Instruction](#setup-and-installation)
+- [Azure Deployment Workflow](#deployment)
 - [Future Work](#future-work)
 - [Contributing](#contributing)
 - [License](#license)
@@ -98,4 +97,76 @@ The dataset used for training and evaluating the model was sourced from [Kaggle]
 - **Base Model Development**: Modify the VGG16 model for binary classification.
 - **Model Training**: Train the updated model using real and AI-generated images.
 - **Model Evaluation**: Evaluate the model's performance on the validation set.
+
+## Setup Instruction
+
+### Prerequisites
+1. Python 3.10 or above
+2. Docker installed on your machine
+3. Azure account with Web App Service and Container Registry
+4. AWS account with access to the S3 bucket containing the dataset
+5. GitHub Account
+
+### Local Setup
+1. **Clone the repository**:
+```
+git clone https://github.com/OlumideOlumayegun/ai-generated-image-detector.git
+cd ai-generated-image-detector
+```
+2. **Create a virtual environment**
+```
+python -m venv venv
+venv\Scripts\activate # For Windows
+```
+3. **Install dependencies**:
+```
+pip install -r requirements.txt
+```
+4. **Run the application locally**:
+```
+python app.py
+```
+5. Access the app at http://localhost:8080 in your browser.
+6. Upload an image, and the app will classify it as Real or Fake.
+
+### Running with Docker 
+1. **Build the Docker image**
+```
+docker build -t real-vs-ai-classifier .
+```
+2. **Run the Docker container**
+```
+docker run -p 8080:8080 real-vs-ai-classifier
+```
+3. Access the app at http://localhost:8080.
+
+## Azure Deployment Workflow
+1. Push the source code to GitHub.
+2. GitHub Actions:
+   + Build the Docker image.
+   + Push the image to Azure Container Registry.
+   + eploy the app to Azure Web App Service.
+3. Access the deployed app via the Azure-provided URL.
+
+## Future Work
+While the AI-Generated Image Detector app demonstrates robust performance, there are several opportunities for improvement and expansion:
+
+1. Enhanced Model Architecture: Explore more advanced architectures such as EfficientNet, Vision Transformers (ViT), or custom CNNs to further improve classification accuracy and computational efficiency.
+
+2. Dataset Expansion: Incorporate larger and more diverse datasets to improve the model's generalization.
+
+3. Multi-Label Classification: Extend the model to classify images into multiple categories, such as distinguishing between different types of AI-generated images (e.g., GAN-based, diffusion-based) and real images.
+
+4. Real-Time Classification: Optimize the model and web application for real-time image classification with minimal latency, making it suitable for applications requiring immediate feedback.
+
+5. Cloud-Agnostic Deployment: Expand deployment options by integrating with other cloud platforms like AWS, Google Cloud, or on-premise systems to enhance accessibility and flexibility for different user requirements.
+
+## Contributing
+Contributions are welcome! Please fork the repository, make your changes, and submit a pull request.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+
+
 
