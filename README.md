@@ -145,7 +145,7 @@ docker run -p 8080:8080 real-vs-ai-classifier
 2. GitHub Actions:
    + Build the Docker image.
    + Push the image to Azure Container Registry.
-   + eploy the app to Azure Web App Service.
+   + Deploy the app to Azure Web App Service.
 3. Access the deployed app via the Azure-provided URL.
 
 ## Future Work
